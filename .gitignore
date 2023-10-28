@@ -1,4 +1,3 @@
 /.venv
 /projeto-modelo
 data/output/lista-cnpjs-cnaes.xlsx
-.vscode/launch.json
