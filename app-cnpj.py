@@ -1,16 +1,16 @@
 # importando as bibliotecas
 
 import time
-import openpyxl
 import pandas as pd
-
 
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 
 # arquivo com os CNPJs para criar a lista de CNPJs e montar a URL
 # aqui pode ser feito uma melhoria, onde o usuário pode colocar o nome do arquivo via CMD sem ter que abrir o vscode
-df = pd.read_excel('data/output/bases-separadas/-41.xlsx')
+df = pd.read_excel(
+    'data/output/bases-separadas/-55.xlsx'
+)
 cnpj_lista = df['cnpj'].values.tolist()  # lista final
 
 # teste de CNPJ
