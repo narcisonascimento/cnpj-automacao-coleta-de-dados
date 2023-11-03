@@ -20,6 +20,7 @@ for file in file_list:
 # into a single DataFrame, returns new 
 # DataFrame.
 excl_merged = pd.concat(excl_list, ignore_index=True)
+print(excl_merged['cnpj'].value_counts())
 
 # cleaning dataframe before export to excel
 excl_merged_complete = excl_merged.loc[(excl_merged['cnae'] != "cnpj nao encontrado")]
@@ -27,6 +28,10 @@ excl_merged_complete = excl_merged_complete.drop_duplicates('cnpj').reset_index(
 
 excl_merged_uncomplete = excl_merged.loc[(excl_merged['cnae'] == "cnpj nao encontrado")]
 excl_merged_uncomplete = excl_merged_uncomplete.drop_duplicates('cnpj').reset_index(drop=True)
+
+# print the merged DataFrame and sum of number of rows in the dataframe
+print(excl_merged_complete['cnae'].value_counts())
+print(excl_merged_uncomplete['cnae'].value_counts())
 
 # exporting to excel file with date and time
 todays_date = time.strftime("%d-%m-%Y")
