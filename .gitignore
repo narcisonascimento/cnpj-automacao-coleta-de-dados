@@ -1,3 +1,6 @@
 /.venv
 /projeto-modelo
 data/output/
+data/output/lista-cnpjs-separados
+data/output/Bases-separadas
+data/output/bases-separadas
