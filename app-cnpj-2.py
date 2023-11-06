@@ -14,7 +14,7 @@ from selenium.webdriver.chrome.service import Service
 # arquivo com os CNPJs para criar a lista de CNPJs
 # aqui pode ser feito uma melhoria, onde o usuário pode colocar o nome do arquivo via CMD sem ter que abrir o vscode
 df = pd.read_excel(
-    'data/output/bases-separadas/-5.xlsx', converters={'cnpj': str}
+    'data/output/bases-separadas/-7.xlsx', converters={'cnpj': str}
 )
 
 # lista final
