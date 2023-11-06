@@ -1,7 +1,7 @@
 # Renault - Automação de coleta de Dados <br> RPA - Robotic Process Automation
 # Resultados:
 ****Otimização de 50% do tempo no segundo app desenvolvido.****<br>
-**Sucesso de XX% na coleta dos dados.**
+**Sucesso de 96% na coleta dos dados.**
 
 **Problema:** falta de CNAE em uma base de 5,7k CNPJs.<br>
 **Objetivo:** coletar dados de forma automática e complementar a base de CNPJs.<br>
