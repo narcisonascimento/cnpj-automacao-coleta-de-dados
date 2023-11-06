@@ -12,9 +12,8 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.service import Service
 
 # arquivo com os CNPJs para criar a lista de CNPJs
-# aqui pode ser feito uma melhoria, onde o usuário pode colocar o nome do arquivo via CMD sem ter que abrir o vscode
 df = pd.read_excel(
-    'data/output/bases-separadas/-11.xlsx', converters={'cnpj': str}
+    'data/output/bases-separadas/-15.xlsx', converters={'cnpj': str}
 )
 
 # lista final
@@ -43,15 +42,13 @@ for i in list(cnpj_lista):
         driver.implicitly_wait(7)
 
         # Inserir o CNPJ no campo de busca
-        # wait = WebDriverWait(driver, 5)
-        # wait.until(EC.presence_of_element_located((By.CLASS_NAME, "text-sm")))
         driver.find_element(By.CLASS_NAME, "text-sm").clear()
         driver.find_element(By.CLASS_NAME, "text-sm").send_keys(i)
 
         # Clicar buscar
         driver.find_element(By.CLASS_NAME, "rounded-full").click()
 
-        # Se existir resultado, Clicar no primeiro resultado encontrado, caso contrário
+        # Se existir resultado, Clicar no primeiro resultado encontrado
         wait = WebDriverWait(driver, 5)
         wait.until(EC.presence_of_element_located(
             (By.CLASS_NAME, "text-dark2")))
@@ -61,24 +58,33 @@ for i in list(cnpj_lista):
             driver.find_element(By.CLASS_NAME, "text-brand").click()
 
             dado_cnpj_verificar = driver.find_element(
-                By.XPATH, "/html/body/div[1]/div/main/div[2]/div[7]/div/h2/b[2]").text
+                By.XPATH,
+                "/html/body/div[1]/div/main/div[2]/div[7]/div/h2/b[2]").text
             dado_cnae = driver.find_element(
-                By.XPATH, "/html/body/div[1]/div/main/div[2]/div[8]/ul/li[2]").text
+                By.XPATH,
+                "/html/body/div[1]/div/main/div[2]/div[8]/ul/li[2]").text
             dado_situacao_cadastral = driver.find_element(
-                By.XPATH, "/html/body/div[1]/div/main/div[2]/ul[1]/li[3]/p").text
+                By.XPATH,
+                "/html/body/div[1]/div/main/div[2]/ul[1]/li[3]/p").text
             dado_url = driver.current_url
 
             # colocar os dados na lista
-            cnpj_lista_verificado.append(
-                [i, dado_cnpj_verificar, dado_cnae, dado_situacao_cadastral, dado_url])
+            cnpj_lista_verificado.append([i,
+                                          dado_cnpj_verificar,
+                                          dado_cnae,
+                                          dado_situacao_cadastral,
+                                          dado_url])
 
         else:
             dado_cnpj_verificar = "cnpj nao encontrado"
             dado_cnae = "cnpj nao encontrado"
             dado_situacao_cadastral = "cnpj nao encontrado"
             dado_url = "cnpj nao encontrado"
-            cnpj_lista_verificado.append(
-                [i, dado_cnpj_verificar, dado_cnae, dado_situacao_cadastral, dado_url])
+            cnpj_lista_verificado.append([i,
+                                          dado_cnpj_verificar,
+                                          dado_cnae,
+                                          dado_situacao_cadastral,
+                                          dado_url])
 
     except:
         dado_cnpj = i
@@ -86,8 +92,11 @@ for i in list(cnpj_lista):
         dado_cnae = "cnpj nao encontrado"
         dado_situacao_cadastral = "cnpj nao encontrado"
         dado_url = "cnpj nao encontrado"
-        cnpj_lista_verificado.append(
-            [i, dado_cnpj_verificar, dado_cnae, dado_situacao_cadastral, dado_url])
+        cnpj_lista_verificado.append([i,
+                                      dado_cnpj_verificar,
+                                      dado_cnae,
+                                      dado_situacao_cadastral,
+                                      dado_url])
 
     driver.quit()
 
@@ -114,12 +123,9 @@ for index, row in df.iterrows():
     if row['cnpj'] != row['cnpj_verificar']:
         df.loc[df['cnpj'] != df['cnpj_verificar'], [
             'cnae', 'situacao_cadastral', 'url']] = "cnpj nao encontrado"
-        # print(f"The values are equal for row {index}")
+
     else:
         pass
-        # df.loc[df['cnpj'] != df['cnpj_verificar'], [
-        #     'cnae', 'situacao_cadastral', 'url']] = "cnpj nao encontrado"
-        # print(f"The values are not equal for row {index}")
 
 # retirando coluna de verificação de CNPJ
 df = df.drop(columns=['cnpj_verificar'])
@@ -131,7 +137,8 @@ excelfilename = "rnt-cnpj-com-cnae" + "-dia-" + \
     todays_date + "-hora-" + todays_time + ".xlsx"
 
 # Exportando o arquivo para o excel
-df.to_excel(
-    f"data\output\lista-cnpjs-separados\{excelfilename}", sheet_name='sheet1', index=False)
+df.to_excel(f"data\output\lista-cnpjs-separados\{excelfilename}",
+            sheet_name='sheet1',
+            index=False)
 # df.to_excel(
 #     f"data\output\lista-teste\{excelfilename}", sheet_name='sheet1', index=False)
