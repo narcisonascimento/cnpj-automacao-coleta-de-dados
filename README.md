@@ -41,7 +41,7 @@ O passo a passo é mais complexo, onde: <br>
 Após a coleta de todos os dados, tratei os dados e exportei para excel.
 
 **Passo 7:**<br>
-Concatenar todas os arquivos em Excel separando dados com e sem CNAE.
+Concatenação de todos os arquivos em Excel separando em duas bases, com e sem CNAE.
 
 **Passo 8:**<br>
-Compartilhar com a área de negócios.
+Compartilhar com a área de negócios no formato de Excel .xlsl.
