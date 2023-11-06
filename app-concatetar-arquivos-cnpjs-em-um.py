@@ -29,6 +29,12 @@ excl_merged_complete = excl_merged_complete.drop_duplicates('cnpj').reset_index(
 excl_merged_uncomplete = excl_merged.loc[(excl_merged['cnae'] == "cnpj nao encontrado")]
 excl_merged_uncomplete = excl_merged_uncomplete.drop_duplicates('cnpj').reset_index(drop=True)
 
+# drop all rows in the excl_merged_uncomplete if all of them  by 'cnpj' are in the excl_merged_complete
+cnpj_list = excl_merged_complete['cnpj'].unique()
+mask = excl_merged_uncomplete['cnpj'].isin(cnpj_list)
+excl_merged_uncomplete = excl_merged_uncomplete[~mask]
+excl_merged_uncomplete = excl_merged_uncomplete.drop_duplicates('cnpj').reset_index(drop=True)
+
 # print the merged DataFrame and sum of number of rows in the dataframe
 print(excl_merged_complete['cnae'].value_counts())
 print(excl_merged_uncomplete['cnae'].value_counts())
