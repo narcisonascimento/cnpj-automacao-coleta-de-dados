@@ -1,4 +1,4 @@
-# Renault - Automação de coleta de Dados <br> RPA - Robotic Process Automation
+# Renault - Automação de coleta de Dados <br> RDA - Robotic Desktop Automation
 # Resultados:
 ****Otimização de 50% do tempo no segundo app desenvolvido.****<br>
 **Sucesso de 96% na coleta dos dados.**
