@@ -12,21 +12,24 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.service import Service
 
 # arquivo com os CNPJs para criar a lista de CNPJs
-df = pd.read_excel(
-    'data/output/bases-separadas/-15.xlsx', converters={'cnpj': str}
-)
+# df = pd.read_excel(
+#     'data/output/bases-separadas/-15.xlsx', converters={'cnpj': str}
+# )
 
 # lista final
-cnpj_lista = df['cnpj'].values.tolist()
+# cnpj_lista = df['cnpj'].values.tolist()
 
 # teste de CNPJ
-# cnpj_lista = ['29614931000161']
+cnpj_lista = ['29614931000161']
 # lista teste
 # cnpj_lista = ['29614931000161', '50864554000105']
 # lista teste
 # cnpj_lista = ['50864554000105']
 # lista teste com ultimo cnpj errado
 # cnpj_lista = ['29614931000161', '50864554000105', '1234455555555']
+# lista com CNPJ do Levy para teste
+# cnpj_lista = ['29614931000161', '50864554000105', '1234455555555', '06990590000123']
+
 
 # Listas
 cnpj_lista_verificado = []
@@ -34,19 +37,23 @@ cnpj_lista_verificado = []
 # Acessar o site https://cnpj.linkana.com/
 for i in list(cnpj_lista):
     services = Service(ChromeDriverManager().install())
+    # driver = webdriver.Chrome(service=services)
 
     try:
         driver = webdriver.Chrome(service=services)
         url = "https://cnpj.linkana.com/"
+        # url = "https://amazon.com/"
         driver.get(url)
-        driver.implicitly_wait(7)
+        # driver.implicitly_wait(7)
+        driver.implicitly_wait(60)
 
         # Inserir o CNPJ no campo de busca
         driver.find_element(By.CLASS_NAME, "text-sm").clear()
         driver.find_element(By.CLASS_NAME, "text-sm").send_keys(i)
+        driver.implicitly_wait(30)
 
         # Clicar buscar
-        driver.find_element(By.CLASS_NAME, "rounded-full").click()
+        driver.find_element(By.CLASS_NAME, "bg-white").click()
 
         # Se existir resultado, Clicar no primeiro resultado encontrado
         wait = WebDriverWait(driver, 5)
@@ -98,7 +105,8 @@ for i in list(cnpj_lista):
                                       dado_situacao_cadastral,
                                       dado_url])
 
-    driver.quit()
+    finally:
+        driver.quit()
 
 # tratar os dados antes de exportar
 df = pd.DataFrame(cnpj_lista_verificado,
